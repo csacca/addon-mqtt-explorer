@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start websockify
+# ==============================================================================
+
+# Wait until VNC is up and running
+bashio::log.info "Websockify waiting for VNC to start"
+bashio::net.wait_for 5900
+
+bashio::log.info "Starting websockify..."
+#exec websockify -v --web /usr/share/novnc/ 127.0.0.1:5901 127.0.0.1:5900
+exec websockify -v --web /usr/share/novnc/ 8099 127.0.0.1:5900
