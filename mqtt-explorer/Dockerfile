@@ -13,7 +13,8 @@ WORKDIR /app
 RUN \
     set -x \
     && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y nodejs \
+    && apt-get install -y --no-install-recommends \
+        nodejs \
     \
     && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | \
         gpg --dearmor | \
@@ -21,7 +22,8 @@ RUN \
     && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | \
         tee /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
-    && apt-get install -y yarn \
+    && apt-get install -y --no-install-recommends \
+        yarn \
     \
     && apt-get install -y --no-install-recommends \
         git \
