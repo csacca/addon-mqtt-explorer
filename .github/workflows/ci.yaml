@@ -172,7 +172,7 @@ jobs:
             "docker://${{ steps.flags.outputs.from }}"
           vcn authenticate \
             --output json \
-            --signerID 0x03e406879fd89e52f38f4aab0061266d1183980a \
+            --org home-assistant.io\
             "docker://${{ steps.flags.outputs.from }}" \
             | jq \
               --exit-status \
