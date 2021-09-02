@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start NGINX service
+# ==============================================================================
+
+# Wait for novnc to start before continuing
+bashio::net.wait_for 5901
+
+bashio::log.info "Starting Nginx..."
+exec nginx

@@ -36,7 +36,7 @@ export DISPLAY=":0"
 bashio::log.info "Starting VNC server (local/${LOCAL_ONLY})..."
 tigervncserver \
     -name "Home Assistant - MQTT Explorer" \
-    -geometry 1920x1080 \
+    -geometry 1024x768 \
     -depth 16 \
     -localhost ${LOCAL_ONLY} \
     -SecurityTypes None \
@@ -50,7 +50,5 @@ bashio::net.wait_for 5900
 
 bashio::log.info "Starting the MQTT Explorer..."
 cd /app || exit 1
-#(sleep 5; wmctrl -r ':ACTIVE:' -b toggle,fullscreen)&
+(sleep 5; wmctrl -r ':ACTIVE:' -b toggle,fullscreen)&
 exec yarn start --no-sandbox
-
-#wmctrl -r ':ACTIVE:' -b toggle,fullscreen

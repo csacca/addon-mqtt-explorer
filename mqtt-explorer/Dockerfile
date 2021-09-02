@@ -50,6 +50,7 @@ RUN \
         xfonts-scalable \
         novnc \
         wmctrl \
+        nginx \
     \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
