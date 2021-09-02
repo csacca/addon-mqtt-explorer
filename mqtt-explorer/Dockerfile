@@ -53,9 +53,11 @@ RUN \
         nginx \
     \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    \
-    && git clone https://github.com/thomasnordquist/MQTT-Explorer.git /app \
+    && rm -rf /var/lib/apt/lists/*
+
+# hadolint ignore=DL3008
+RUN \
+    git clone https://github.com/thomasnordquist/MQTT-Explorer.git /app \
     && git checkout tags/0.0.0-0.4.0-beta1 \
     && yarn \
     && yarn build
