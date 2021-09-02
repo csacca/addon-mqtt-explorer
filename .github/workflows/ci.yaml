@@ -172,7 +172,7 @@ jobs:
             "docker://${{ steps.flags.outputs.from }}"
           vcn authenticate \
             --output json \
-            --org home-assistant.io\
+            --org home-assistant.io \
             "docker://${{ steps.flags.outputs.from }}" \
             | jq \
               --exit-status \
