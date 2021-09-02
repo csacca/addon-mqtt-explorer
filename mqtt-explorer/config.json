@@ -8,7 +8,7 @@
   "init": false,
   "ingress": true,
   "ingress_entry": "vnc_lite.html",
-  "services": ["mqtt:want"],
+  "services": ["mqtt:need"],
   "map": ["addons:rw"],
   "schema": {
     "log_level": "list(trace|debug|info|notice|warning|error|fatal)?"
