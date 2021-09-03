@@ -81,6 +81,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 COPY --from=builder /app/build/clean/build/MQTT-Explorer_0.4.0-beta1_*.deb /
 
+# hadolint ignore=DL3008
 RUN \
     set -x \
     && apt-get update \
