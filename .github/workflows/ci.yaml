@@ -155,7 +155,7 @@ jobs:
           elif [[ "${{ matrix.architecture }}" = "i386" ]]; then
             echo "::set-output name=platform::linux/386"
           elif [[ "${{ matrix.architecture }}" = "armhf" ]]; then
-            echo "::set-output name=platform::linux/arm/v7"
+            echo "::set-output name=platform::linux/arm/v5"
           elif [[ "${{ matrix.architecture }}" = "armv7" ]]; then
             echo "::set-output name=platform::linux/arm/v7"
           elif [[ "${{ matrix.architecture }}" = "aarch64" ]]; then
