@@ -58,11 +58,24 @@ RUN \
 
 COPY builder_rootfs /
 
+ARG BUILD_ARCH
 RUN \
     set -x \
+    && if [ "${BUILD_ARCH}" = "aarch64" ]; then \
+            export ELECTRON_ARCH="arm64"; \
+       elif [ "${BUILD_ARCH}" = "amd64" ]; then \
+            export ELECTRON_ARCH="x64"; \
+       elif [ "${BUILD_ARCH}" = "armv7" ]; then \
+            export ELECTRON_ARCH="armv7l"; \
+       else \
+            echo "Unsupported BUILD_ARCH ${BUILD_ARCH}."; \
+            exit 1; \
+       fi \
+    \
     && yarn run \
         electron-builder \
             --linux deb \
+            --$ELECTRON_ARCH \
             --config /app/config.yaml \
             --publish never \
             --projectDir ./build/clean
