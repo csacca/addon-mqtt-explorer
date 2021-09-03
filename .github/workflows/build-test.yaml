@@ -1,0 +1,85 @@
+---
+name: Build Test
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+
+jobs:
+  build-deb:
+    name: Build debian packages for mqtt-explorer
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+        with:
+          repository: "thomasnordquist/MQTT-Explorer"
+
+      - name: 🏗 Setup Node 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: yarn
+
+      - name: 🏗 Install Prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recomends \
+            build-essential \
+            libglib2.0-0 \
+            libx11-6 \
+            libx11-xcb1 \
+            libxcomposite1 \
+            libxcursor1 \
+            libxdamage1 \
+            libxext6 \
+            libxi6 \
+            libxtst6 \
+            libnss3 \
+            libdbus-1-3 \
+            libgdk-pixbuf2.0-0 \
+            libgtk-3-0 \
+            libxss1 \
+            libasound2
+
+      - name: 🏗 Prepare Release
+        run: |
+          yarn
+          yarn prepare-release
+
+      - name: 🏗 Write Build Config
+        uses: DamianReeves/write-file-action
+        with:
+          path: config.yaml
+          contents: |
+            directories:
+              output: build
+              buildResources: res
+              app: ./
+            appId: mqtt-explorer
+            productName: MQTT Explorer
+            nodeGypRebuild: false
+            linux:
+              category: Development
+              maintainer: Thomas Nordquist
+            deb:
+              depends: ["libnss3"]
+            files: []
+            electronVersion: 8.2.3
+          write-mode: overwrite
+
+      - name: 🚀 Build
+        run: |
+          yarn run electron-builder \
+                      --linux deb \
+                      --x64 \
+                      --armv7l \
+                      --arm64 \
+                      --config /app/config.yaml \
+                      --publish never \
+                      --projectDir ./build/clean
+      
+      - name: Inspect Results
+        run: |
+          ls -l build/clean/build/*.deb
+          
