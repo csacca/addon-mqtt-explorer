@@ -1,0 +1,14 @@
+directories:
+  output: build
+  buildResources: res
+  app: ./
+appId: mqtt-explorer
+productName: MQTT Explorer
+nodeGypRebuild: false
+linux:
+  category: Development
+  maintainer: Thomas Nordquist
+deb:
+  depends: ["libnss3"]
+files: []
+electronVersion: 8.2.3

@@ -49,6 +49,5 @@ bashio::log.info "MQTT Explorer waiting for VNC to start"
 bashio::net.wait_for 5900
 
 bashio::log.info "Starting the MQTT Explorer..."
-cd /app || exit 1
 (sleep 5; wmctrl -r ':ACTIVE:' -b toggle,fullscreen)&
-exec yarn start --no-sandbox
+mqtt-explorer --no-sandbox
