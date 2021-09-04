@@ -281,6 +281,9 @@ jobs:
         with:
           name: build-debs
 
+      - name: Check
+        run: ls -l
+
       - name: 🛠️ Build
         uses: docker/build-push-action@v2.7.0
         with:
