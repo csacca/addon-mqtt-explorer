@@ -75,7 +75,7 @@ jobs:
                       --x64 \
                       --armv7l \
                       --arm64 \
-                      --config /app/config.yaml \
+                      --config $(pwd)/config.yaml \
                       --publish never \
                       --projectDir ./build/clean
       
