@@ -78,7 +78,7 @@ jobs:
                       --config $(pwd)/config.yaml \
                       --publish never \
                       --projectDir ./build/clean
-      
+
       - name: Inspect Results
         run: |
           ls -l build/clean/build/*.deb
