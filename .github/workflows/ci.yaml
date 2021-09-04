@@ -190,11 +190,11 @@ jobs:
                       --config $(pwd)/config.yaml \
                       --publish never \
                       --projectDir ./build/clean
-      
+
       - name: 🔎 Inspect results
         run: |
           ls -l build/clean/build/*.deb
-      
+
       - name: ⤴️ Upload .deb artifacts
         uses: actions/upload-artifact@v2
         with:
