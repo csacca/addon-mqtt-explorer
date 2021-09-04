@@ -36,7 +36,7 @@ RUN \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
-COPY MQTT-Explorer_0.4.0-beta1_*.deb /tmp/
+COPY ../MQTT-Explorer_0.4.0-beta1_*.deb /tmp/
 
 ARG BUILD_ARCH
 RUN \
