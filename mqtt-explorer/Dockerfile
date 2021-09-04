@@ -1,4 +1,4 @@
-# ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:bullseye
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:bullseye
 # hadolint ignore=DL3006
 FROM $BUILD_FROM
 
