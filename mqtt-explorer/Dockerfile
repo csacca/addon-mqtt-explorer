@@ -51,7 +51,6 @@ RUN \
             echo "Unsupported BUILD_ARCH ${BUILD_ARCH}."; \
             exit 1; \
        fi \
-    && ls -l /tmp/ \
     && dpkg -i /tmp/MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb \
     && rm /tmp/MQTT-Explorer_0.4.0-beta1_*.deb
 
