@@ -277,7 +277,7 @@ jobs:
               '.verification.status == 0'
 
       - name: ⤵️ Download .deb artifacts
-        uses: action/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: build-debs
 
