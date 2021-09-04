@@ -60,13 +60,6 @@ jobs:
     name: Build debian packages for mqtt-explorer
     needs:
       - information
-      - lint-addon
-      - lint-hadolint
-      - lint-json
-      - lint-markdown
-      - lint-prettier
-      - lint-shellcheck
-      - lint-yamllint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
