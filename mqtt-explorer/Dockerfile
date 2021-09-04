@@ -1,89 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:bullseye
-# hadolint ignore=DL3006
-FROM ${BUILD_FROM} as builder
-
-ENV LANG C.UTF-8
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-WORKDIR /app
-
-# hadolint ignore=DL3008
-RUN \
-    set -x \
-    && apt-get update \
-    && curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y --no-install-recommends \
-        nodejs \
-    \
-    && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | \
-        gpg --dearmor | \
-        tee /usr/share/keyrings/yarnkey.gpg >/dev/null \
-    && echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | \
-        tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        yarn \
-    \
-    && apt-get install -y --no-install-recommends \
-        git \
-        build-essential \
-        libglib2.0-0 \
-        libx11-6 \
-        libx11-xcb1 \
-        libxcomposite1 \
-        libxcursor1 \
-        libxdamage1 \
-        libxext6 \
-        libxi6 \
-        libxtst6 \
-        libnss3 \
-        libdbus-1-3 \
-        libgdk-pixbuf2.0-0 \
-        libgtk-3-0 \
-        libxss1 \
-        libasound2 \
-    \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# hadolint ignore=DL3008
-RUN \
-    set -x \
-    && git clone https://github.com/thomasnordquist/MQTT-Explorer.git /app \
-    && git checkout tags/0.0.0-0.4.0-beta1 \
-    && yarn \
-    && yarn prepare-release
-
-COPY builder_rootfs /
-
-ARG BUILD_ARCH
-RUN \
-    set -x \
-    && if [ "${BUILD_ARCH}" = "aarch64" ]; then \
-            export ELECTRON_ARCH="arm64"; \
-       elif [ "${BUILD_ARCH}" = "amd64" ]; then \
-            export ELECTRON_ARCH="x64"; \
-       elif [ "${BUILD_ARCH}" = "armv7" ]; then \
-            export ELECTRON_ARCH="armv7l"; \
-       else \
-            echo "Unsupported BUILD_ARCH ${BUILD_ARCH}."; \
-            exit 1; \
-       fi \
-    \
-    && yarn run \
-        electron-builder \
-            --linux deb \
-            --$ELECTRON_ARCH \
-            --config /app/config.yaml \
-            --publish never \
-            --projectDir ./build/clean
-
-#
-# Main container
-#
-
+# ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-debian:bullseye
 # hadolint ignore=DL3006
 FROM $BUILD_FROM
 
@@ -91,8 +6,6 @@ ENV LANG C.UTF-8
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-COPY --from=builder /app/build/clean/build/MQTT-Explorer_0.4.0-beta1_*.deb /
 
 # hadolint ignore=DL3008
 RUN \
@@ -110,9 +23,6 @@ RUN \
         libatk-bridge2.0-0 \
         libatspi2.0-0 \
         libcups2 \
-    \
-    && dpkg -i MQTT-Explorer_0.4.0-beta1_*.deb \
-    && apt-get install -y --no-install-recommends \
         tigervnc-common \
         tigervnc-standalone-server \
         openbox \
@@ -124,6 +34,25 @@ RUN \
     \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+
+COPY MQTT-Explorer_0.4.0-beta1_*.deb /
+
+ARG BUILD_ARCH
+RUN \
+    set -x \
+    && if [ "${BUILD_ARCH}" = "aarch64" ]; then \
+            export DEB_ARCH="arm64"; \
+       elif [ "${BUILD_ARCH}" = "amd64" ]; then \
+            export DEB_ARCH="amd64"; \
+       elif [ "${BUILD_ARCH}" = "armv7" ]; then \
+            export DEB_ARCH="armv7l"; \
+       else \
+            echo "Unsupported BUILD_ARCH ${BUILD_ARCH}."; \
+            exit 1; \
+       fi \
+    && dpkg -i MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb \
+    && rm MQTT-Explorer_0.4.0-beta1_*.deb
 
 COPY rootfs /
 
