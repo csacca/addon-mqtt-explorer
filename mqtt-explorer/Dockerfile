@@ -35,9 +35,6 @@ RUN \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /tmp
-COPY MQTT-Explorer_0.4.0-beta1_*.deb /tmp/
-
 ARG BUILD_ARCH
 RUN \
     set -x \
@@ -51,8 +48,10 @@ RUN \
             echo "Unsupported BUILD_ARCH ${BUILD_ARCH}."; \
             exit 1; \
        fi \
-    && dpkg -i /tmp/MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb \
-    && rm /tmp/MQTT-Explorer_0.4.0-beta1_*.deb
+    && curl -L -f -s -o MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb \
+        "https://github.com/csacca/MQTT-Explorer/releases/download/v0.4.0-beta1-csacca-1/MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb" \
+    && dpkg -i MQTT-Explorer_0.4.0-beta1_${DEB_ARCH}.deb \
+    && rm MQTT-Explorer_0.4.0-beta1_*.deb
 
 COPY rootfs /
 
