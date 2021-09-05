@@ -16,7 +16,9 @@ A Home Assistant addon to run MQTT Explorer.
 
 ## About
 
-MQTT Explorer is a comprehensive MQTT client that provides a structured overview of your MQTT topics and makes working with devices/services on your broker dead-simple. Please support the developer of this software at [MQTT Explorer][mqtt-explorer].
+MQTT Explorer is a comprehensive MQTT client that provides a structured overview
+of your MQTT topics and makes working with devices/services on your broker
+dead-simple. Please support the developer of this software at [MQTT Explorer][mqtt-explorer].
 
 This addon provides an ingress environment for running MQTT Explorer.
 
@@ -37,7 +39,8 @@ https://github.com/csacca/hassio-addons
 
 1. Click the `OPEN WEB UI` button
 
-**Note**: This add-on requires a configured MQTT Broker in Home Assistant (it auto configures MQTT Explorer)
+**Note**: This add-on requires a configured MQTT Broker in Home Assistant
+(it auto configures MQTT Explorer)
 
 ## Authors & contributors
 
