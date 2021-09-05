@@ -9,6 +9,7 @@
   "init": false,
   "ingress": true,
   "ingress_entry": "vnc_lite.html",
+  "panel_icon": "mdi:cloud-outline",
   "services": ["mqtt:need"],
   "map": ["addons:rw"],
   "schema": {
